@@ -17,11 +17,37 @@ class Spree::Admin::ReviewsController < Spree::Admin::ResourceController
   end
 
   def edit
-    if @review.product.nil?
-      flash[:error] = Spree.t("error_no_product")
-      redirect_to admin_reviews_path and return
+  end
+
+  def new
+    @review = Spree::Review.new
+  end
+
+  # Pasted from app/controllers/spree/reviews_controller.rb
+  def create
+    params[:review][:rating].sub!(/\s*[^0-9]*$/,'') unless params[:review][:rating].blank?
+
+    @review = Spree::Review.new(review_params)
+    @review.user = spree_current_user if spree_user_signed_in?
+    @review.ip_address = request.remote_ip
+    @review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
+
+    authorize! :create, @review
+    if @review.save
+      flash[:notice] = Spree.t('review_successfully_submitted')
+      redirect_to spree.admin_reviews_path
+    else
+      render :action => "new"
     end
   end
+  def permitted_review_attributes # adapted
+    [:rating, :title, :review, :name, :date, :product_id]
+  end
+  def review_params
+    params.require(:review).permit(permitted_review_attributes)
+  end
+  # end pasted
+
 
   private
 

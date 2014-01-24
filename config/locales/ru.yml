@@ -9,6 +9,7 @@ ru:
         created_at: Дата отзыва
         ip_address: IP
         user: Пользователь
+        date: Дата
     models:
       spree/review:
         zero: "0 отзывов"
@@ -16,7 +17,10 @@ ru:
         few: "%{count} отзыва"
         other: "%{count} отзывов"
   spree:
+    admin:
+      new_review: Новый отзыв
     reviews: Отзывы
+    review: Отзыв
     title: Заголовок
     write_your_own_review: Оставьте свой отзыв
     review_management: Управление отзывами
@@ -76,7 +80,8 @@ ru:
 
     original_version: 'Исходная версия'
     edited_version: 'Отредактированная версия'
-    editing_review_for_html: 'Редактирование отзыва для HTML'
+    editing_review_for_html: 'Редактирование отзыва для продукта %{link}'
+    editing_review: Редактирование отзыва
     no_reviews_available: "Отзывов нет"
     based_upon_review_count: "На основании всех отзывов"
 

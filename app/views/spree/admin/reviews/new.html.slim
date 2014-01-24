@@ -1,0 +1,18 @@
+= content_for :page_title do
+  = Spree.t('admin.new_review')
+
+= render 'spree/admin/shared/product_sub_menu'
+
+= form_for([:admin, @review]) do |f|
+  .alpha.eight.columns
+    - unless @review.title.blank?
+      h2 = @review.title
+      p = simple_format(@review.review)
+
+  .omega.eight.columns
+    = render 'form', f: f
+  .clear
+  
+  fieldset.no-border-top
+    p.review_submit
+      = f.submit Spree.t(:submit_your_review), :class => "button bg_darkfirst"

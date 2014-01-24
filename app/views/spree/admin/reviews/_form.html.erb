@@ -1,22 +1,53 @@
 <%= render "spree/shared/error_messages", :target => @review %>
-<%= f.field_container :name do %>
-  <%= f.label :name %><br />
-  <%= f.text_field :name, :maxlength => "255", :size => "50" %>
-<% end %>
 
-<%= f.field_container :title do %>
-  <%= f.label :title %><br />
-  <%= f.text_field :title, :maxlength => "255", :size => "50" %>
-<% end %>
+<%# Pasted from views/spree/admin/orders/add_product.html.erb %>
+<%= render :partial => "spree/admin/variants/autocomplete", :formats => :js %>
+<%= render :partial => "spree/admin/variants/autocomplete_stock", :formats => :js %>
 
-<%= f.field_container :review do %>
-  <%= f.label :review %><br />
-  <%= f.text_area :review, :wrap => "virtual", :rows => "10", :cols => "60" %>
-<% end %>
+<fieldset class="no-border-bottom">
+  <legend align="center"><%= Spree.t(:product) %></legend>
 
-<% if Spree::Reviews::Config[:track_locale] %>
-<%= f.field_container :locale do %>
-  <%= f.label :locale %><br />
-  <%= f.select :locale, I18n.available_locales.map { |lc| [t(lc, :default => lc.to_s), lc.to_s] } %>
-<% end %>
-<% end %>
+  <div data-hook="add_product_name" class="field eight columns alpha">
+    <%= label_tag 'review[product_id]', Spree.t(:name_or_sku) %>
+    <%= hidden_field_tag 'review[product_id]', "", :class => "variant_autocomplete fullwidth" %>
+  </div>
+</fieldset>
+<%# end pasted %>
+
+<fieldset class="no-border-bottom">
+	<legend align="center"><%= Spree.t(:review) %></legend>
+
+	<%= f.field_container :name do %>
+	  <%= f.label :name %><br />
+	  <%= f.text_field :name, :maxlength => "255", :size => "50" %>
+	<% end %>
+
+	<%= f.field_container :title do %>
+	  <%= f.label :title %><br />
+	  <%= f.text_field :title, :maxlength => "255", :size => "50" %>
+	<% end %>
+
+	<%= f.field_container :review do %>
+	  <%= f.label :review %><br />
+	  <%= f.text_area :review, :wrap => "virtual", :rows => "10", :cols => "60" %>
+	<% end %>
+
+	<%= f.field_container :date do %>
+	  <%= f.label :date, Spree.t(:date) %>
+	  <%= f.error_message_on :date %>
+	  <%= f.text_field :date, :value => datepicker_field_value(@review.date), :class => 'datepicker' %>
+	<% end %>
+
+	<%= f.field_container :rating do %>
+	  <%= f.label :rating %><br />
+	  <%= f.number_field :rating, :value => @review.rating || 5, in: [1..5], min: 1, max: 5 %>
+	<% end %>
+
+
+	<% if Spree::Reviews::Config[:track_locale] %>
+		<%= f.field_container :locale do %>
+			<%= f.label :locale %><br />
+			<%= f.select :locale, I18n.available_locales.map { |lc| [t(lc, :default => lc.to_s), lc.to_s] } %>
+		<% end %>
+	<% end %>
+</fieldset>

@@ -1,5 +1,9 @@
 <% content_for :page_title do %>
-	<%= Spree.t(:editing_review_for_html, :link => link_to(@review.product.name, product_path(@review.product))) %>
+	<% if @review.product.present? %>
+		<%= Spree.t(:editing_review_for_html, :link => link_to(@review.product.name, product_path(@review.product))) %>
+	<% else %>
+		<%= Spree.t(:editing_review) %>
+	<% end %>
 <% end %>
 
 <% render 'spree/admin/shared/product_sub_menu' %>

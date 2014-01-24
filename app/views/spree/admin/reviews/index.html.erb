@@ -4,6 +4,13 @@
 
 <% render 'spree/admin/shared/product_sub_menu' %>
 
+<% content_for :page_actions do %>
+	<li>
+		<%= button_link_to Spree.t('admin.new_review'), new_admin_review_url, :icon => 'icon-plus', :id => 'admin_new_review' %>
+	</li>
+<% end %>
+
+
 <% content_for :table_filter_title do %>
 	<%= Spree.t('search') %>
 <% end %>
@@ -11,7 +18,7 @@
 <% content_for :table_filter do %>
   <div data-hook="admin_reviews_index_search">
 
-    <%= search_form_for [:admin, @search] do |f| %>
+	<%= search_form_for [:admin, @search] do |f| %>
 		<div class="alpha three columns">
 			<div class="field">
 				<%= label_tag nil, Spree.t(:user) %><br />
@@ -45,7 +52,7 @@
 		<div class="form-buttons actions filter-actions" data-hook="admin_reviews_index_search_buttons">
 			<%= button Spree.t(:search), 'icon-search' %>
 		</div>
-    <%- end -%>
+	<%- end -%>
   </div>
 <%- end -%>
 

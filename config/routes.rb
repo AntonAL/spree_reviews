@@ -1,6 +1,6 @@
 Spree::Core::Engine.routes.append do
   namespace :admin do
-    resources :reviews, only: [:index, :destroy, :edit, :update] do
+    resources :reviews do
       member do
         get :approve
       end
